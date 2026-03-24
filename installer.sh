@@ -1,5 +1,5 @@
 #!/bin/bash
-# created by man20820
+# created by AMBERVPN
 
 # pergi ke root
 cd
@@ -57,28 +57,28 @@ echo "screenfetch" >> .bash_profile
 cd
 rm /etc/nginx/sites-enabled/default
 rm /etc/nginx/sites-available/default
-wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/nginx.conf"
+wget -O /etc/nginx/nginx.conf "https://raw.githubusercontent.com/noelrubio143/sslandovpn/refs/heads/main/nginx.conf"
 mkdir -p /home/webserver/public_html
 echo "<pre>Setup by man20820 | https://man20820.com | https:// tkjpedia.com </pre>" > /home/webserver/public_html/index.html
 echo "<?php phpinfo(); ?>" > /home/webserver/public_html/info.php
-wget -O /etc/nginx/conf.d/webserver.conf "https://raw.githubusercontent.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/webserver.conf"
+wget -O /etc/nginx/conf.d/webserver.conf "https://raw.githubusercontent.com/noelrubio143/sslandovpn/refs/heads/main/webserver.conf"
 sed -i 's/listen = \/var\/run\/php5-fpm.sock/listen = 127.0.0.1:9000/g' /etc/php5/fpm/pool.d/www.conf
 service php5-fpm restart
 service nginx restart
 
 # install openvpn
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/ca.crt"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/dh1024.pem"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/openvpn.conf"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/server.conf"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/server.crt"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/server.key"
-wget -O /etc/openvpn/openvpn "https://rawgit.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/update-resolf-conf"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/ca.crt"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/dh1024.pem"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/openvpn.conf"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/server.conf"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/server.crt"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/server.key"
+wget -O /etc/openvpn/openvpn "https://rawgit.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/update-resolf-conf"
 cd /etc/openvpn/
 service openvpn restart
 sysctl -w net.ipv4.ip_forward=1
 sed -i 's/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g' /etc/sysctl.conf
-wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/iptables.up.rules"
+wget -O /etc/iptables.up.rules "https://raw.githubusercontent.com/noelrubio143/sslandovpn/refs/heads/main/iptables.up.rules"
 sed -i '$ i\iptables-restore < /etc/iptables.up.rules' /etc/rc.local
 MYIP=`curl -s ifconfig.me`;
 MYIP2="s/xxxxxxxxx/$MYIP/g";
@@ -88,7 +88,7 @@ service openvpn restart
 
 #konfigurasi openvpn
 cd /etc/openvpn/
-wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/openvpn/client.ovpn"
+wget -O /etc/openvpn/client.ovpn "https://raw.githubusercontent.com/noelrubio143/sslandovpn/refs/heads/main/openvpn/client.ovpn"
 sed -i $MYIP2 /etc/openvpn/client.ovpn;
 PASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 15 | head -n 1`;
 useradd -M -s /bin/false man20820
@@ -139,7 +139,7 @@ service dropbear restart
 
 # install stunnel 
 apt-get install stunnel4 -y
-wget -O /etc/stunnel/stunnel.conf "https://raw.githubusercontent.com/man20820/script-autoinstaller-ssh-ssl-stunnel-vps-debian-7/master/stunnel.conf"
+wget -O /etc/stunnel/stunnel.conf "https://raw.githubusercontent.com/noelrubio143/sslandovpn/refs/heads/main /stunnel.conf"
 openssl genrsa -out key.pem 2048
 openssl req -new -x509 -key key.pem -out cert.pem -days 1095
 cat key.pem cert.pem >> /etc/stunnel/stunnel.pem
@@ -286,6 +286,6 @@ echo "IPv6     : [off]"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "Log Installasi --> /root/log-install.txt"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
-echo "SILAHKAN REBOOT VPS ANDA !"  | tee -a log-install.txt
+echo " REBOOT VPS !"  | tee -a log-install.txt
 echo ""  | tee -a log-install.txt
 echo "==============================================="  | tee -a log-install.txt
